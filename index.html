@@ -1,0 +1,154 @@
+﻿
+<!DOCTYPE html>
+<!--
+    Copyright (c) 2012-2016 Adobe Systems Incorporated. All rights reserved.
+
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <!-- Good default declaration:
+    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+        * Enable inline JS: add 'unsafe-inline' to default-src
+        * Enable eval(): add 'unsafe-eval' to default-src
+    * Create your own at http://cspisawesome.com
+    -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+
+   
+    <script type="text/javascript" charset="utf-8" src="js/index.js"></script>
+    <script src="js/jquery-1.8.0.min.js"></script>
+    <script src="js/jquery.mobile-1.4.5.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script src="cordova_plugins.js"></script>  
+    <script src="js/cordova.js"></script>
+    <script type="text/javascript">
+              app.initialize();
+              
+                document.addEventListener("deviceready", onDeviceReady, false);
+       
+                           </script>
+    <title>To Do List</title>
+</head>
+
+<body>
+      
+
+            <div data-role="page"  id="PendingPage" >
+
+               
+                <div data-role="header" data-position="fixed" data-add-back-btn="true">
+                    <h1> To Do List</h1>
+                    <button id="CameraBtn"  data-icon="delete"></button> <br>
+
+                    <div data-role="navbar">
+                        <ul>
+                            <li> <a href="#AddNewJob" data-ng-href="AddNewJob" data-icon="plus">Add New Job</a></li>
+                            <li><a href="#CompletedPage" data-ng-href="CompletedPage" onclick="LoadJobsList();" data-icon="check">Completed</a></li>
+                            <li><a href="#PendingPage" data-ng-href="PendingPage" onclick="LoadPendingList();" data-icon="alert">Pending</a></li>
+                        </ul>
+                   </div>
+                </div>
+                <h1>Pending Job</h1>
+             <div id="PendingJobList" data-role="collapsible-set">
+
+
+             </div>
+
+            </div>
+            
+            <div data-role="page" id="AddNewJob" >
+                <h1> Add New Job</h1>
+                <div data-role="header" data-position="fixed"  data-add-back-btn="true">
+                    <h1> To Do List</h1>
+                    <div data-role="navbar">
+                        <ul>
+                            <li> <a href="#AddNewJob" data-ng-href="AddNewJob" data-icon="plus" >Add New Job</a></li>
+                            <li><a href="#CompletedPage" data-ng-href="CompletedPAge" onclick="LoadJobsList();" data-icon="check">Completed</a></li>
+                            <li><a href="#PendingPage" data-ng-href="PendingPage" onclick="LoadPendingList();" data-icon="alert">Pending</a></li>
+                        </ul>
+                        
+                    </div>
+                </div>
+                <label for="text-3">Enter Job Title</label>
+                <input name="text-3" id="JobTitle" type="text" value="" data-clear-btn="true">
+                <label for="textarea-1">Enter Description</label>
+                <textarea name="textarea-1" id="Description"></textarea>
+                <button id="CameraBtn"  onclick="capturePhoto();" class="ui-btn ui-icon-camera ui-btn-icon-left ui-shadow ui-corner-all ui-alt-icon">Capture Photo</button> <br>
+                <img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
+              <a href="#CompletedPage" id="btn_Add" data-role="button" onclick="AddEntry();"> Add Entry</a>
+                 <!-- <button id="btnSubmitt" onclick="AddEntry();">Add Entry</button>
+   -->
+             </div>
+                
+    <div class="ui-content" data-role="page" id="CompletedPage">
+
+        <h1> Completed</h1>
+
+        <div data-role="header" data-position="fixed" data-add-back-btn="true">
+            <h1> To Do List</h1>
+            <div data-role="navbar">
+                <ul >
+                    <li > <a href="#AddNewJob" data-ng-href="AddNewJob"  data-icon="plus">Add New Job</a></li>
+                    <li><a href="#CompletedPage" data-ng-href="CompletedPage" onclick="LoadJobsList();" data-icon="check">Completed</a></li>
+                    <li><a href="#PendingPage" data-ng-href="PendingPage" onclick="LoadPendingList();" data-icon="alert">Pending</a></li>
+                </ul>
+
+
+            </div>
+            <div >
+                <p><a href="#Completed" data-role="button" id="garSaved" onClick="LoadJobsList();" data-icon="arrow-r" data-iconpos="right">Display</a></p>
+
+                <div id="CompletedJobList" data-role="collapsible-set"   >
+                
+                    
+               
+                </div>
+                <div class="separator-fields"></div>
+                <input id="txtEmail" type="text" data-clear-btn="true"  />/br
+          
+                      <a href="mailto:" onclick="doEmail();">Send email</a>
+            </div>
+
+        </div>
+
+       
+
+
+    </div> 
+   
+         
+      
+
+           
+  
+</body>
+
+</html>
